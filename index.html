@@ -89,6 +89,36 @@
                 let number = data['temp']
                 $('#temp').text(number)
             })
+
+            fetch("http://spartacodingclub.shop/web/api/movie").then(res => res.json()).then(data => {
+                let cards = data['movies']
+
+                $('#cardlist').empty()
+                cards.forEach((a) => {
+                    let comment = a['comment']
+                    let desc = a['desc']
+                    let image = a['image']
+                    let title = a['titel']
+                    let star_count = a['star']
+                    
+                    let star_image = '⭐'.repeat(star_count)
+                   
+                    let temp_html = `<div class="col">
+                                        <div class="card h-100">
+                                            <img src= "${image}"
+                                                class="card-img-top" alt="...">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${title}</h5>
+                                                <p class="card-text">${desc}</p>
+                                                <p>${star_image}</p>
+                                                <p class="mycomment">${comment}</p>
+                                            </div>
+                                        </div>
+                                    </div>`
+
+                    $('#cardlist').append(temp_html)
+                })
+            })
         })
     </script>
 </head>
@@ -124,8 +154,8 @@
             <button type="button" class="btn btn-outline-dark">닫기</button>
         </div>
     </div>
-    <div class="mycards">
-        <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div  class="mycards">
+        <div id="cardlist" class="row row-cols-1 row-cols-md-4 g-4">
             <div class="col">
                 <div class="card h-100">
                     <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
